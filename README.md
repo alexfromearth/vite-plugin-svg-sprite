@@ -1,4 +1,5 @@
 # vite-plugin-svg-sprite
+Fork of https://github.com/meowtec/vite-plugin-svg-sprite, adds ability to pass a function to `symbolId`
 SVG sprite plugin for [Vite](https://github.com/vitejs/vite)
 
 ## install
