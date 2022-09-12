@@ -1,6 +1,6 @@
 {
   "name": "@alexfromearth/vite-plugin-svg-sprite",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": " Forked SVG sprite plugin for Vite",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
