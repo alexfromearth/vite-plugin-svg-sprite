@@ -9,7 +9,7 @@ import { Plugin } from 'vite';
 const { stringify } = JSON;
 
 export interface SvgSpriteOptions {
-  include?: string[] | string;
+  include?: string[] | string | RegExp;
   symbolId?: string | ((filePath: string) => string);
   svgo?: boolean | SvgoOptions;
 }
@@ -26,7 +26,11 @@ export default (options?: SvgSpriteOptions) => {
     name: 'svg-sprite',
 
     async transform(src, filepath) {
-      if (!micromatch.isMatch(filepath, match, {
+      if (match instanceof RegExp) {
+        if (!match.test(filepath)) {
+          return undefined;
+        }
+      } else if (!micromatch.isMatch(filepath, match, {
         dot: true,
       })) {
         return undefined;
@@ -41,7 +45,7 @@ export default (options?: SvgSpriteOptions) => {
       let id = name;
 
       if (options?.symbolId) {
-        id = typeof options.symbolId === 'function' ?  options.symbolId(filepath) : options.symbolId;
+        id = typeof options.symbolId === 'function' ? options.symbolId(filepath) : options.symbolId;
 
         if (id.includes('[hash]')) {
           const hash = crypto.createHash('sha256');
