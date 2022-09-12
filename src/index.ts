@@ -10,7 +10,7 @@ const { stringify } = JSON;
 
 export interface SvgSpriteOptions {
   include?: string[] | string;
-  symbolId?: string;
+  symbolId?: string | ((filePath: string) => string);
   svgo?: boolean | SvgoOptions;
 }
 
@@ -41,7 +41,7 @@ export default (options?: SvgSpriteOptions) => {
       let id = name;
 
       if (options?.symbolId) {
-        id = options.symbolId;
+        id = typeof options.symbolId === 'function' ?  options.symbolId(filepath) : options.symbolId;
 
         if (id.includes('[hash]')) {
           const hash = crypto.createHash('sha256');
